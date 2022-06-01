@@ -65,6 +65,61 @@
 - [ ] JPA 변경감지의 원리에 대해서 알고 있는가?
     - [ ] 만약 EqualsAndHashCode 를 사용했다면 변경감지에 대한 부분을 생각했는가?
     - [ ] 어떤 상황에 동작하는가?
+        - [ ] 아래 상황에서 어떤 쿼리가 발생하는지 아는가?
+            ```java
+            @Entity
+            class Person {
+
+                @Id
+                Long id;
+
+                @Column
+                String name;
+
+            }
+
+            @Service
+            class Service {
+
+                private final PersonRepository personRepository;
+
+                @Transactional
+                public void test() {
+                    Person person = personRepository.findById(1L);
+
+                    person.setName("roach!!")
+                }
+
+            }
+            ```
+            - [ ] 그럼 아래 상황에서는 어떤 쿼리가 발생하는지 아는가?
+            ```java
+            @Entity
+            class Person {
+
+                @Id
+                Long id;
+
+                @Column
+                String name;
+
+            }
+
+            @Service
+            class Service {
+
+                private final PersonRepository personRepository;
+
+                @Transactional
+                public void test() {
+                    Person person = personRepository.findByName("roachBot");
+
+                    person.setName("roach!!")
+                }
+
+            }
+            ```
+            - [ ] 어떤 차이가 있는가? 아님 없는가?
 
 - [ ] `@Transactional` 어노테이션을 알고 있는가?
     - [ ] 읽기만 하는 부분에서 `readOnly` 옵션을 주고 있는가?
